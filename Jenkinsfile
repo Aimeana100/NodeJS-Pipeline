@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    dockerImage = docker.build("${env.DOCKER_IMAGE}:${env.BUILD_ID}")
+                    dockerImage = docker.build("${env.DOCKER_IMAGE}")
                 }
             }
         }
