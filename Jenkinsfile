@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = "aimeana/nodejs-app"
-        REGISTRY = "hub.docker.com"
+        REGISTRY = "index.docker.io/v1/"
         REGISTRY_CREDENTIALS = 'docker-registry-credentials-id'
     }
     options {
