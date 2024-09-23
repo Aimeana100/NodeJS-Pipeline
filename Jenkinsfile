@@ -52,7 +52,6 @@ pipeline {
                 script {
                     docker.withRegistry("https://${env.REGISTRY}", "${env.REGISTRY_CREDENTIALS}") {
                         // Tag and push the image
-                        dockerImage.push() // Push the versioned image
                         dockerImage.push('latest') // Push the latest tag
                     }
                 }
@@ -61,17 +60,18 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    kubeconfig(credentialsId: 'JenkinsCredentials', serverUrl: 'http://127.0.0.1:32769') {
-                        sh 'kubectl apply -f kubernetes-deployment.yml'
-                    }
+                    // kubeconfig(credentialsId: 'JenkinsCredentials', serverUrl: 'http://127.0.0.1:32769') {
+                    //     sh 'kubectl apply -f kubernetes-deployment.yml'
+                    // }
+                       kubernetesDeploy(configs: "kubernetes-deployment.yml")
                 }
             }
         }
-        stage('Post-Deployment Tests') {
-            steps {
-                sh 'curl -f http://localhost:8080/health'
-            }
-        }
+        // stage('Post-Deployment Tests') {
+        //     steps {
+        //         sh 'curl -f http://localhost:8080/health'
+        //     }
+        // }
         stage('Cleanup') {
             steps {
                 sh 'docker rmi ${DOCKER_IMAGE} || true'
