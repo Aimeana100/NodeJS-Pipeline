@@ -5,11 +5,11 @@ pipeline {
 	    BUILD_ID = "1"
     }
     stages {
- stage('Checkout Latest Source') {
-      steps {
-        git branch: 'main', url: 'https://github.com/Aimeana100/NodeJS-Pipeline.git'
-      }
- }
+        stage('Checkout Latest Source') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Aimeana100/NodeJS-Pipeline.git'
+            }
+        }
         stage('Build') {
             steps {
                 script {
@@ -22,7 +22,6 @@ pipeline {
                 script {
                     dockerImage.inside {
                          // Set execute permissions for node_modules/.bin
-                        sh 'chmod +x node_modules/.bin/mocha'
                         sh 'npm test'
                     }
                 }
