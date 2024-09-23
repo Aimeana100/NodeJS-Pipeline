@@ -9,6 +9,8 @@ pipeline {
         timestamps()
         timeout(time: 30, unit: 'MINUTES')
     }
+    def dockerImage
+    
     stages {
         stage('Checkout Latest Source') {
             steps {
@@ -52,6 +54,7 @@ pipeline {
                 script {
                     docker.withRegistry("https://${env.REGISTRY}", "${env.REGISTRY_CREDENTIALS}") {
                         // Tag and push the image
+                        dockerImage.push()
                         dockerImage.push('latest') // Push the latest tag
                     }
                 }
