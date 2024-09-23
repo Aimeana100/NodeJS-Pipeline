@@ -7,7 +7,6 @@ pipeline {
     }
     options {
         timestamps()
-        retry(2)
         timeout(time: 30, unit: 'MINUTES')
     }
     stages {
