@@ -1,7 +1,9 @@
-const assert = require('assert');
+import { equal } from 'assert';
+import { describe, it } from 'mocha';
+
 
 describe('Sample Test', function() {
   it('should return true', function() {
-    assert.equal(true, true);
+    equal(true, true);
   });
 });

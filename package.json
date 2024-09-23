@@ -2,9 +2,12 @@
   "name": "nodeapp",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "mocha",
-    "start": "node app.js"
+    "start": "node src/app.js",
+    "lint": "eslint ./src  --ext .js",
+    "lint-fix": "eslint --fix ./src  --ext .js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +17,9 @@
     "express": "^4.21.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.0",
+    "eslint": "^9.11.0",
+    "globals": "^15.9.0",
     "mocha": "^10.7.3"
   }
 }
