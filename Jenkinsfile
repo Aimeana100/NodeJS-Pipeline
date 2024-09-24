@@ -9,7 +9,6 @@ pipeline {
         timestamps()
         timeout(time: 30, unit: 'MINUTES')
     }
-    def dockerImage
     
     stages {
         stage('Checkout Latest Source') {
