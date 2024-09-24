@@ -63,9 +63,10 @@ pipeline {
             steps {
                 script {
                     // kubeconfig(credentialsId: 'JenkinsCredentials', serverUrl: 'http://127.0.0.1:32769') {
-                    sh 'kubectl apply -f kubernetes-deployment.yml --validate=false'
+                    // sh 'kubectl apply -f kubernetes-deployment.yml --validate=false'
                     // }
                     //   kubernetesDeploy(configs: "kubernetes-deployment.yml")
+		    sh 'docker run -d --name jenkins-nodejs-app -p 3000:3000 aimeana/nodejs-app:latest'
                 }
             }
         }
