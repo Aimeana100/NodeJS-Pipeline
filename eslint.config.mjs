@@ -5,7 +5,7 @@ export default [
   {
     files: ["src/**/*.js"],
     languageOptions: {
-      sourceType: "commonjs",
+      sourceType: "module",
       // Explicitly set the environment to Node.js to allow 'require'
       // globals: globals.node,
     },
