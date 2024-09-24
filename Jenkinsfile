@@ -63,9 +63,9 @@ pipeline {
             steps {
                 script {
                     // kubeconfig(credentialsId: 'JenkinsCredentials', serverUrl: 'http://127.0.0.1:32769') {
-                    //     sh 'kubectl apply -f kubernetes-deployment.yml'
+                    sh 'kubectl apply -f kubernetes-deployment.yml'
                     // }
-                       kubernetesDeploy(configs: "kubernetes-deployment.yml")
+                    //   kubernetesDeploy(configs: "kubernetes-deployment.yml")
                 }
             }
         }
