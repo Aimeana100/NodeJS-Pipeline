@@ -4,10 +4,14 @@ pipeline {
         DOCKER_IMAGE = "aimeana/nodejs-app"
         REGISTRY = "index.docker.io/v1/"
         REGISTRY_CREDENTIALS = 'docker-registry-credentials-id'
+        SSH_CREDENTIALS_ID = 'aws-ssh-credentials-id'
+        EC2_USER: 'ubuntu'
+        EC2_IP: '54.175.208.204'
     }
     options {
         timestamps()
         timeout(time: 30, unit: 'MINUTES')
+        buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '1', numToKeepStr: '3')
     }
     
     stages {
@@ -59,22 +63,20 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    // kubeconfig(credentialsId: 'JenkinsCredentials', serverUrl: 'http://127.0.0.1:32769') {
-                    // sh 'kubectl apply -f kubernetes-deployment.yml --validate=false'
-                    // }
-                    //   kubernetesDeploy(configs: "kubernetes-deployment.yml")
-		    sh 'docker run -d --name jenkins-nodejs-app -p 3000:3000 aimeana/nodejs-app:latest'
-                }
-            }
+        stage("Deploy to Ec2 "){
+        steps{
+            script{
+                sshagent(credentials: ["${env.SSH_CREDENTIALS_ID}"]) {
+                    sh """
+                       ssh -o StrictHostKeyChecking=no ${env.EC2_USER}@${env.EC2_IP} '
+                       docker pull ${DOCKER_IMAGE}:latest &&
+                       docker stop jenkins-nodejs-app || true &&
+                       docker rm jenkins-nodejs-app || true &&
+                       docker run -d --name jenkins-nodejs-app -p 3000:3000 ${DOCKER_IMAGE}:latest
+                       '
+                     """
         }
-        // stage('Post-Deployment Tests') {
-        //     steps {
-        //         sh 'curl -f http://localhost:8080/health'
-        //     }
-        // }
+        }
         stage('Cleanup') {
             steps {
                 sh 'docker rmi ${DOCKER_IMAGE} || true'
