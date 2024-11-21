@@ -5,8 +5,8 @@ pipeline {
         REGISTRY = "index.docker.io/v1/"
         REGISTRY_CREDENTIALS = 'docker-registry-credentials-id'
         SSH_CREDENTIALS_ID = 'aws-ssh-credentials-id'
-        EC2_USER: 'ubuntu'
-        EC2_IP: '54.175.208.204'
+        EC2_USER  = 'ubuntu'
+        EC2_IP= '54.175.208.204'
     }
     options {
         timestamps()
