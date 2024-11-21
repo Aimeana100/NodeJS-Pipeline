@@ -75,7 +75,9 @@ pipeline {
                        docker run -d --name jenkins-nodejs-app -p 3000:3000 ${DOCKER_IMAGE}:latest
                        '
                      """
-        }
+                     }
+                  }
+              }
         }
         stage('Cleanup') {
             steps {
