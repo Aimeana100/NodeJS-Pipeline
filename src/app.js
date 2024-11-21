@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 app.get('/', (req, res) => {  
-res.send('Hello welcome to my node application');
+res.send('Hello welcome to my EC2 hosted node application');
 });
 
 app.listen(port, () => {  
